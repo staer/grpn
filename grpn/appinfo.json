@@ -1,0 +1,9 @@
+{
+	"id": "com.staeronline.grpn",
+	"version": "1.0.0",
+	"vendor": "Dan 'Staer' Harris",
+	"type": "web",
+	"main": "index.html",
+	"title": "grpn",
+	"icon": "icon.png"
+}
