@@ -29,6 +29,7 @@ DealsAssistant.prototype.setup = function() {
 
 DealsAssistant.prototype.selectDeal = function(event) {
     Mojo.Log.info("Deal ID: ", event.item.id);
+    Mojo.Controller.stageController.pushScene("dealDetails", event.item.id);
 };
 
 DealsAssistant.prototype.refreshList = function() {

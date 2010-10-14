@@ -7,5 +7,9 @@
     {
         "scenes": "cities",
         "source": "app/assistants/cities-assistant.js"
+    },
+    {
+        "scenes": "dealDetails",
+        "source": "app/assistants/dealDetails-assistant.js"
     }
 ]
