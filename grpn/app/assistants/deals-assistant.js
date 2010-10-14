@@ -20,7 +20,15 @@ DealsAssistant.prototype.setup = function() {
     }, 
     this.dealListModel);
     
+    this.dealListTapHandler = this.selectDeal.bindAsEventListener(this);
+    this.controller.listen("dealList", Mojo.Event.listTap, this.dealListTapHandler);
+    
+    
     this.refreshList();
+};
+
+DealsAssistant.prototype.selectDeal = function(event) {
+    Mojo.Log.info("Deal ID: ", event.item.id);
 };
 
 DealsAssistant.prototype.refreshList = function() {
