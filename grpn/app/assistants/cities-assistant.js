@@ -21,16 +21,24 @@ CitiesAssistant.prototype.setup = function() {
     
     
     // Bind the showDeals() method to the tap event of a list item
-    this.cityListHandler = this.showDeals.bindAsEventListener(this);
-    this.controller.listen("cityList", Mojo.Event.listTap, this.cityListHandler);
+    this.cityListTapHandler = this.selectCity.bindAsEventListener(this);
+    this.controller.listen("cityList", Mojo.Event.listTap, this.cityListTapHandler);
     
     
+    // Setup the scrim
+    this.mySpinner = this.controller.get("mySpinner");
+    this.controller.setupWidget("mySpinner", {'spinnerSize':Mojo.Widget.spinnerLarge},this.spinnerModel={'spinning':true});
+    this.scrim = Mojo.View.createScrim(this.controller.document, {scrimClass:'palm-scrim'});
+    this.scrim.hide();
+    this.controller.get("myScrim").appendChild(this.scrim).appendChild(this.controller.get(this.mySpinner));
+    
+    this.scrim.show();
     // Refresh the list of cities available with Groupon
 	this.refreshList();
 };
 
 // Transition to the show deals scene for the selected City
-CitiesAssistant.prototype.showDeals = function(event) {
+CitiesAssistant.prototype.selectCity = function(event) {
     Mojo.Controller.stageController.pushScene("deals", event.item.id);
 };
 
@@ -43,8 +51,10 @@ CitiesAssistant.prototype.refreshList = function() {
             client_id: "afee02ef734231d1ddfe2a9594956eeb2e702b9f"
         },
         onComplete: function(response) {
+            that.scrim.hide();
             that.cityListModel.items = response.responseJSON.divisions;
             that.controller.modelChanged(that.cityListModel);
+            
 	    } 
 	});
 };
