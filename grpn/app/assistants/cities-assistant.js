@@ -16,7 +16,8 @@ CitiesAssistant.prototype.setup = function() {
         reorderable: false,
         dividerFunction: function(model) {
             return model.name.toString()[0];
-        }
+        },
+        filterFunction: this.searchCities.bind(this)
     }, this.cityListModel);
     
     
@@ -35,6 +36,26 @@ CitiesAssistant.prototype.setup = function() {
     this.scrim.show();
     // Refresh the list of cities available with Groupon
 	this.refreshList();
+};
+
+CitiesAssistant.prototype.searchCities = function(filterString, listWidget, offset, count) {
+    var subset = [];
+    var lowerFilter, i;
+    
+    if(filterString) {
+        lowerFilter = filterString.toLowerCase();
+        for(i = 0; i < this.cityListModel.items.length; i++) {
+            if(this.cityListModel.items[i].name.toLowerCase().include(lowerFilter)) {
+                subset[subset.length] = this.cityListModel.items[i];
+            }
+        }
+    } else {
+        subset = this.cityListModel.items;
+    }
+    
+    listWidget.mojo.setLength(subset.length);   
+    listWidget.mojo.setCount(subset.length);    // Sets the count in the search bubble
+    listWidget.mojo.noticeUpdatedItems(0, subset);    
 };
 
 // Transition to the show deals scene for the selected City
