@@ -31,9 +31,10 @@ DealDetailsAssistant.prototype.setup = function() {
         items: [
             {
                 items: [
-                    { icon: "back", command: "x", label: "back"},
+                    { icon: "dealListIcon", command: "dealList", label: ""},
                     { label: "", width: 200 },
-                    { icon: 'forward', command: 't', label: "forward"}
+                    // TODO: Need an icon for the city listing option
+                    { icon: 'forward', command: 'cityList', label: ""}
                 ]
             }
         ]
@@ -101,6 +102,21 @@ DealDetailsAssistant.prototype.setup = function() {
     this.scrim.show();
     this.refreshDeal();
 
+};
+
+DealDetailsAssistant.prototype.handleCommand = function(event) {
+    if(event.type === Mojo.Event.command) {
+        switch(event.command) {
+            case 'dealList':
+                Mojo.Controller.stageController.pushScene("deals", this.deal.division.id, this.deal.division.name);
+                break;
+            case 'cityList':
+                Mojo.Controller.stageController.pushScene("cities");
+                break;
+            default:
+                break;
+        }
+    }
 };
 
 

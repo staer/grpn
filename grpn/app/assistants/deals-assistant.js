@@ -18,6 +18,20 @@ DealsAssistant.prototype.setup = function() {
     this.scrim.hide();
     this.controller.get("myScrim").appendChild(this.scrim).appendChild(this.controller.get(this.mySpinner));
     
+    this.controller.setupWidget(Mojo.Menu.viewMenu, {}, this.viewMenuModel = {
+        visible: true,
+        items: [
+            {
+                items: [
+                    { label: "", width: 260 },
+                    // TODO: Need an icon for the city listing option
+                    { icon: 'forward', command: 'cityList', label: ""}
+                ]
+            }
+        ]
+    });
+    
+    
     
     this.dealListModel = {
         items: []
@@ -37,8 +51,22 @@ DealsAssistant.prototype.setup = function() {
     this.refreshList();
 };
 
+DealsAssistant.prototype.handleCommand = function(event) {
+    if(event.type === Mojo.Event.command) {
+        switch(event.command) {
+            case 'cityList':
+                Mojo.Controller.stageController.popScenesTo();
+                Mojo.Controller.stageController.swapScene("cities");
+                break;
+            default:
+                break;
+        }
+    }
+};
+
 DealsAssistant.prototype.selectDeal = function(event) {
-    Mojo.Controller.stageController.pushScene("dealDetails", event.item.id);
+    Mojo.Controller.stageController.popScenesTo();
+    Mojo.Controller.stageController.swapScene("dealDetails", event.item.id);
 };
 
 DealsAssistant.prototype.refreshList = function() {
@@ -53,7 +81,12 @@ DealsAssistant.prototype.refreshList = function() {
       },
       onComplete: function(response) {
           that.scrim.hide();
-          that.controller.get("cityName").innerHTML = "Deals for " + that.divisionName;
+        
+          // Update the title
+          that.viewMenuModel.items[0].items[0].label = "Deals for " + that.divisionName;
+          that.controller.modelChanged(that.viewMenuModel);
+          
+          // Update the list
           that.dealListModel.items = response.responseJSON.deals;
           that.controller.modelChanged(that.dealListModel);
           

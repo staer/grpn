@@ -60,7 +60,8 @@ CitiesAssistant.prototype.searchCities = function(filterString, listWidget, offs
 
 // Transition to the show deals scene for the selected City
 CitiesAssistant.prototype.selectCity = function(event) {
-    Mojo.Controller.stageController.pushScene("deals", event.item.id, event.item.name);
+    Mojo.Controller.stageController.popScenesTo();
+    Mojo.Controller.stageController.swapScene("deals", event.item.id, event.item.name);
 };
 
 CitiesAssistant.prototype.refreshList = function() {

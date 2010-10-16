@@ -20,3 +20,7 @@
 .filter-field-container-height {
   height: 96px;
 }
+
+.dealListIcon {
+    background: url(../images/list-view-header-icon.png) left center no-repeat;
+}
