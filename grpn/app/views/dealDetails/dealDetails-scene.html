@@ -1,4 +1,98 @@
-<!-- TODO: replace the contents of this file with your own html -->
 <div class="palm-body-text">
-	This scene "dealDetails" was generated on 2010-10-14 at 16:37:33.
+<table>
+	<tbody>
+		<tr>
+			<td width="70%">
+				<img src="" width="100%" id="dealImage" class="thumbnail" />
+			</td>
+			<td>
+				<div style="text-align:center;">
+					00d 16h 32m<br/>
+					Remaining<br/>
+					<div id="buyButton" class="palm-button affirmative" style="width: 100px;">Buy!</div>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
 </div>
+
+<div class="palm-body-text blurb"id="dealTitle">	
+</div>
+
+
+<table class="palm-divider collapsible" x-mojo-touch-feedback="delayed">
+	<tbody>
+		<tr>
+			<td class="left"></td>
+			<td class="label">Highlights</td>
+			<td class="line" width="100%"></td>
+			<td><div class="palm-arrow-expanded arrow_button" id="highlightsArrow"></div></td>
+			<td class="right"></td>
+		</tr>
+	</tbody>
+</table>
+<div id='highlightsDrawer' x-mojo-element="Drawer">
+	<div class="palm-body-text" id="highlightsDrawerContent">
+		PLACEHOLDER
+	</div>
+</div>
+
+
+<table class="palm-divider collapsible" x-mojo-touch-feedback="delayed">
+	<tbody>
+		<tr>
+			<td class="left"></td>
+			<td class="label">Description</td>
+			<td class="line" width="100%"></td>
+			<td><div class="palm-arrow-closed arrow_button" id="descriptionArrow"></div></td>
+			<td class="right"></td>
+		</tr>
+	</tbody>
+</table>
+<div id='descriptionDrawer' x-mojo-element="Drawer">
+	<div class="palm-body-text" id='descriptionDrawerContent'>
+	</div>
+</div>
+
+<table class="palm-divider collapsible" x-mojo-touch-feedback="delayed">
+	<tbody>
+		<tr>
+			<td class="left"></td>
+			<td class="label">Details</td>
+			<td class="line" width="100%"></td>
+			<td><div class="palm-arrow-closed arrow_button" id="detailsArrow"></div></td>
+			<td class="right"></td>
+		</tr>
+	</tbody>
+</table>
+<div id='detailsDrawer' x-mojo-element="Drawer">
+	<div class="palm-body-text" id="detailsDrawerContent">
+		PLACEHOLDER
+	</div>
+</div>
+
+<table class="palm-divider collapsible" x-mojo-touch-feedback="delayed">
+	<tbody>
+		<tr>
+			<td class="left"></td>
+			<td class="label">Locations</td>
+			<td class="line" width="100%"></td>
+			<td><div class="palm-arrow-closed arrow_button" id="locationsArrow"></div></td>
+			<td class="right"></td>
+		</tr>
+	</tbody>
+</table>
+
+<div id='locationsDrawer' x-mojo-element="Drawer">
+	<div x-mojo-element="Scroller" id="locationsScroller">
+		<div id="scrollerContainer" class="palm-body-text">
+		</div>
+	</div>
+	<div x-mojo-element="Button" id="viewMapButton"></div>
+</div>
+
+<div id="myScrim">
+  <div id="mySpinner" x-mojo-element="Spinner"></div>
+</div>
+			

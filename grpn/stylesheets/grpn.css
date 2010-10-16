@@ -1,1 +1,19 @@
 /* TODO: put your application-specific CSS here */
+.scrollerItem {
+    width: 310px;
+    min-width: 310px;
+    float: left;
+}
+
+.blurb {
+    -webkit-border-radius: 5px; 
+    background-color: #ABCA86; 
+    border: 2px solid #76A045; 
+    padding: 5px;
+    text-align: center;
+}
+
+.thumbnail {
+    -webkit-border-radius: 5px;
+    border: 2px solid #76A045;
+}
