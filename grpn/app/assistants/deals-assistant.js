@@ -1,14 +1,23 @@
 function DealsAssistant(divisionId) {
     this.divisionId = divisionId;
     
-    Mojo.Log.info("Processing divison:", divisionId);
-	/* this is the creator function for your scene assistant object. It will be passed all the 
+    /* this is the creator function for your scene assistant object. It will be passed all the 
 	   additional parameters (after the scene name) that were passed to pushScene. The reference
 	   to the scene controller (this.controller) has not be established yet, so any initialization
 	   that needs the scene controller should be done in the setup function below. */
 }
 
 DealsAssistant.prototype.setup = function() {
+    // ========
+    // = Srim =
+    // ========
+    this.mySpinner = this.controller.get("mySpinner");
+    this.controller.setupWidget("mySpinner", {'spinnerSize':Mojo.Widget.spinnerLarge},this.spinnerModel={'spinning':true});
+    this.scrim = Mojo.View.createScrim(this.controller.document, {scrimClass:'palm-scrim'});
+    this.scrim.hide();
+    this.controller.get("myScrim").appendChild(this.scrim).appendChild(this.controller.get(this.mySpinner));
+    
+    
     this.dealListModel = {
         items: []
     };   
@@ -23,12 +32,11 @@ DealsAssistant.prototype.setup = function() {
     this.dealListTapHandler = this.selectDeal.bindAsEventListener(this);
     this.controller.listen("dealList", Mojo.Event.listTap, this.dealListTapHandler);
     
-    
+    this.scrim.show();
     this.refreshList();
 };
 
 DealsAssistant.prototype.selectDeal = function(event) {
-    Mojo.Log.info("Deal ID: ", event.item.id);
     Mojo.Controller.stageController.pushScene("dealDetails", event.item.id);
 };
 
@@ -36,7 +44,6 @@ DealsAssistant.prototype.refreshList = function() {
   // Refresh the list 
   var that = this;
   
-  Mojo.Log.info("running request...", this.divisionId);
   var request = new Ajax.Request("http://api.groupon.com/v2/deals.json", {
       method: "get",
       parameters: {
@@ -44,11 +51,10 @@ DealsAssistant.prototype.refreshList = function() {
           division_id: this.divisionId
       },
       onComplete: function(response) {
+          that.scrim.hide();
           that.dealListModel.items = response.responseJSON.deals;
           that.controller.modelChanged(that.dealListModel);
-          //Mojo.Log.info("complete!");
-          Mojo.Log.info(JSON.stringify(response.responseJSON));
-          //Mojo.Log.info("Deals #: ", response.responseJSON.deals.length);
+          
       }
   });
  };
