@@ -11,5 +11,9 @@
     {
         "scenes": "dealDetails",
         "source": "app/assistants/dealDetails-assistant.js"
+    },
+    {
+        "scenes": "splash",
+        "source": "app/assistants/splash-assistant.js"
     }
 ]
