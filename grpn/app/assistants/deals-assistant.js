@@ -1,5 +1,6 @@
-function DealsAssistant(divisionId) {
+function DealsAssistant(divisionId, divisionName) {
     this.divisionId = divisionId;
+    this.divisionName = divisionName;
     
     /* this is the creator function for your scene assistant object. It will be passed all the 
 	   additional parameters (after the scene name) that were passed to pushScene. The reference
@@ -52,13 +53,13 @@ DealsAssistant.prototype.refreshList = function() {
       },
       onComplete: function(response) {
           that.scrim.hide();
+          that.controller.get("cityName").innerHTML = "Deals for " + that.divisionName;
           that.dealListModel.items = response.responseJSON.deals;
           that.controller.modelChanged(that.dealListModel);
           
       }
   });
  };
-
 
 DealsAssistant.prototype.activate = function(event) {
 	/* put in event handlers here that should only be in effect when this scene is active. For

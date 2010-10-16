@@ -1,8 +1,19 @@
 <div class="palm-row" x-mojo-touch-feedback="delayed">
 	<div class="palm-row-wrapper">
-		<img src="#{smallImageUrl}" />
-    	<div class="title">
-        	#{title}
-    	</div>
+		<div class="palm-body-text">
+		<table>
+			<tbody>
+				<tr>
+					<td><img src="#{sidebarImageUrl}" class="thumbnail" style="width: 100px;"/></td>
+					<td>
+						<table>
+							<tr><td>#{merchant.name}</td></tr>
+							<tr><td style="font-size: 12px;">#{title}</td></tr>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
 	</div>
 </div>
