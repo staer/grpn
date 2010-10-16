@@ -187,7 +187,10 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     this.controller.get("dealImage").src = deal.largeImageUrl;
     this.controller.get("descriptionDrawerContent").innerHTML = deal.pitchHtml;
     this.controller.get("highlightsDrawerContent").innerHTML = deal.highlightsHtml;
-    
+    this.controller.get("priceAmount").innerHTML = deal.options[0].price.formattedAmount;
+    this.controller.get("discountPercent").innerHTML = deal.options[0].discountPercent + "%";
+    this.controller.get("valueAmount").innerHTML = deal.options[0].value.formattedAmount;
+    this.controller.get("savingsAmount").innerHTML = deal.options[0].discount.formattedAmount;
     
     // For now we just use the first set of options, it is possible that
     // there are more than one, but not sure when (or what to do with them)
@@ -207,6 +210,9 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     } else {
         this.controller.get("detailsDrawerContent").innerHTML = "None Available";
     } 
+        
+    // TODO: Use templates instead of manually building HTML
+    // See: Mojo.View.render for template rendering    
         
     html = "";
     for(i = 0; i < deal.redemptionLocations.length;i++) 
