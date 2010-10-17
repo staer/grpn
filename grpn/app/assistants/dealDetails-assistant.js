@@ -232,6 +232,28 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     this.controller.get("valueAmount").innerHTML = deal.options[0].value.formattedAmount;
     this.controller.get("savingsAmount").innerHTML = deal.options[0].discount.formattedAmount;
     
+    
+    // Calculate the time left to buy the Group
+    // We have to manually parse the UTC date string provided by the Groupon
+    // API
+    var today = new Date();
+    var endDate = new Date(Date.parse(deal.endAt.substring(0,10)));
+    endDate.setUTCHours(parseInt(deal.endAt.substring(11,13), 10));
+    endDate.setUTCMinutes(parseInt(deal.endAt.substring(14,16), 10));
+    
+    var diff = endDate - today;
+    var MINUTE = 1000*60;
+    var HOUR = MINUTE*60;
+    var DAY = 24 * HOUR;
+    
+    var days = Math.floor(diff / DAY);
+    var hours = Math.floor((diff - (days * DAY)) / HOUR);
+    var minutes = Math.floor((diff - (days * DAY) - (hours * HOUR)) / MINUTE);
+    
+    this.controller.get("daysLeft").innerHTML = days.toString();
+    this.controller.get("hoursLeft").innerHTML = hours.toString();
+    this.controller.get("minutesLeft").innerHTML = minutes.toString();
+    
     // For now we just use the first set of options, it is possible that
     // there are more than one, but not sure when (or what to do with them)
     if(deal.options.length >= 1) {
