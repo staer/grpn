@@ -2,6 +2,7 @@
     width: 310px;
     min-width: 310px;
     float: left;
+    min-height: 40px;
 }
 
 .blurb {

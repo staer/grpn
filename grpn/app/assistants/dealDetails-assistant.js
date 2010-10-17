@@ -154,17 +154,41 @@ DealDetailsAssistant.prototype.buy = function(event) {
     });
 };
 
-
 // ===================================================================
 // = Launches the map application to view all locations for the deal =
 // ===================================================================
 DealDetailsAssistant.prototype.viewMap = function(event) {
+    var scrollState = this.controller.get("locationsScroller").mojo.getState();
+    var scrollSize = this.controller.get("locationsScroller").mojo.scrollerSize();
+    
+    // Use a "fudged" scroll width to allow for some error
+    // Also the scroll state properties don't match what is expected
+    // scroll size is 320, yet when on the 2nd snap item the state is -315 instead 
+    // of -320. Very odd. By fuding it we can easily calculate the snap index
+    // Note: Palm really needs to add a "getSnapIndex()" method to go along with
+    // "setSnapIndex()"
+    var scrollWidthFudged = Math.floor(scrollSize.width * 0.95);
+    var snapIndex = Math.floor(Math.abs((scrollState.left/scrollWidthFudged)));
+    
+    // Helper function to get a property or return an empty string
+    var getProperty = function(obj, prop) {
+        return obj[prop] ? obj[prop] : '';
+    };
+    
+    // Build an address query string for google maps
+    var address = this.deal.redemptionLocations[snapIndex];
+    var addressString = getProperty(address, 'streetAddress1');
+    addressString += getProperty(address, 'streetAddress2') + ' ';
+    addressString += getProperty(address, 'city') + ' ';
+    addressString += getProperty(address, 'state') + ' ';
+    addressString += getProperty(address, 'postalCode');
+    
     this.controller.serviceRequest("palm://com.palm.applicationManager", {
         method:"launch",
         parameters: {
             id: "com.palm.app.maps",
             params: {
-                query: "palm, sunnyvale"
+                query: addressString
             }
         }
     });
@@ -263,8 +287,19 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     }
     this.controller.get("scrollerContainer").setStyle({width: 310*deal.redemptionLocations.length+"px"});
     this.controller.get("scrollerContainer").innerHTML = html;
+    
+    // Hide the "view map" button and add 
+    if(deal.redemptionLocations.length===0) {
+        this.controller.get("scrollerContainer").innerHTML = "<div class='scrollerItem'>Location Information Unavailable<br/></div>";
+        this.controller.get("scrollerContainer").setStyle({width: 310*deal.redemptionLocations.length+"px"});
+        this.controller.get("viewMapButton").hide();
+    }
+    
+    
     this.locationsScrollerModel.snapElements.x = this.controller.select('.scrollerItem');
     this.controller.modelChanged(this.locationsScrollerModel);
+    
+
 
 };
 
