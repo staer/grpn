@@ -20,11 +20,12 @@ StageAssistant.prototype.setup = function() {
 
 
 StageAssistant.prototype.handleCommand = function(event) {
-    var message = "This application is open source and available on github at <a href='http://www.github.com/staer/grpn'>www.github.com/staer/grpn</a>. ";
-    message += "<br/>Please feel free to post questions, comments, bugs, or feature requests on the issue tracker.";
-    message += "<br/><br/>";
-    message += "This application is powered by Groupon&trade;, visit their website at <a href='http://touch.groupon.com'>www.groupon.com</a> ";
-    message += "for the full Groupon&trade; experience.";
+    var message = Mojo.View.render({
+       object: {},
+       template: 'templates/about' 
+    });
+    
+    Mojo.Log.info(message);
     
     var currentScene = this.controller.activeScene();
     if(event.type === Mojo.Event.command) {
