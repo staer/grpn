@@ -60,6 +60,17 @@ CitiesAssistant.prototype.searchCities = function(filterString, listWidget, offs
 
 // Transition to the show deals scene for the selected City
 CitiesAssistant.prototype.selectCity = function(event) {
+    
+    var db = new Mojo.Depot({name: 'com.staeronline.grpn'}, function(){
+        db.add('defaultCity', {
+          id: event.item.id,
+          name: event.item.name
+        }, function() {
+            // On Success
+        }, function() {
+            // On failure
+        });
+    });
     Mojo.Controller.stageController.popScenesTo();
     Mojo.Controller.stageController.swapScene("deals", event.item.id, event.item.name);
 };

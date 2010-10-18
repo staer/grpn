@@ -17,11 +17,11 @@ SplashAssistant.prototype.setup = function() {
     // TODO: Handle errors with DB opening and key retrival
     setTimeout(function() {
         var db = new Mojo.Depot({name: 'com.staeronline.grpn'}, function(){
-            db.get('defaultCity', function(cityId){
-                if(cityId===null) {
+            db.get('defaultCity', function(city){
+                if(city===null) {
                     Mojo.Controller.stageController.swapScene("cities");
                 } else {
-                    Mojo.Controller.stageController.swapScene("deals", cityId);
+                    Mojo.Controller.stageController.swapScene("deals", city.id, city.name);
                 }
             }); 
         });
