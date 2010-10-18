@@ -47,6 +47,9 @@ CitiesAssistant.prototype.searchCities = function(filterString, listWidget, offs
     var lowerFilter, i;
     
     if(filterString) {
+        // Hide the spacer div since we are pushing down the list with the search
+        // box
+        this.controller.get("headerSpacer").hide();
         lowerFilter = filterString.toLowerCase();
         for(i = 0; i < this.cityListModel.items.length; i++) {
             if(this.cityListModel.items[i].name.toLowerCase().include(lowerFilter)) {
@@ -54,6 +57,9 @@ CitiesAssistant.prototype.searchCities = function(filterString, listWidget, offs
             }
         }
     } else {
+        // Make sure to show the spacer div so that we don't overlap the list
+        // with the header
+        this.controller.get("headerSpacer").show();
         subset = this.cityListModel.items;
     }
     
