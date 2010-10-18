@@ -82,7 +82,7 @@ DealsAssistant.prototype.refreshList = function() {
   var request = new Ajax.Request("http://api.groupon.com/v2/deals.json", {
       method: "get",
       parameters: {
-          client_id: GRPN.client_id,
+          client_id: Mojo.appInfo.client_id,
           division_id: this.divisionId
       },
       onComplete: function(response) {

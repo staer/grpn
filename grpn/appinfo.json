@@ -5,5 +5,6 @@
 	"type": "web",
 	"main": "index.html",
 	"title": "grpn",
-	"icon": "icon.png"
+	"icon": "icon.png",
+	"client_id": "afee02ef734231d1ddfe2a9594956eeb2e702b9f"
 }
