@@ -6,6 +6,10 @@ function CitiesAssistant() {
 }
 
 CitiesAssistant.prototype.setup = function() {
+    
+    // Main menu, attributes and model found in stage-assistant.js
+    this.controller.setupWidget(Mojo.Menu.appMenu, grpnMenuAttributes, grpnMenuModel);
+    
     this.cityListModel = {
         items: []
     };   

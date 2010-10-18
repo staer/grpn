@@ -18,6 +18,12 @@ DealsAssistant.prototype.setup = function() {
     this.scrim.hide();
     this.controller.get("myScrim").appendChild(this.scrim).appendChild(this.controller.get(this.mySpinner));
     
+    
+    
+    // Main menu, attributes and model found in stage-assistant.js
+    this.controller.setupWidget(Mojo.Menu.appMenu, grpnMenuAttributes, grpnMenuModel);
+
+    
     this.controller.setupWidget(Mojo.Menu.viewMenu, {}, this.viewMenuModel = {
         visible: true,
         items: [

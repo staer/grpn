@@ -17,6 +17,10 @@ DealDetailsAssistant.prototype.setup = function() {
     // =========================
     // = Setup all the widgets =
     // =========================
+    
+    // Main menu, attributes and model found in stage-assistant.js
+    this.controller.setupWidget(Mojo.Menu.appMenu, grpnMenuAttributes, grpnMenuModel);
+        
     this.controller.setupWidget("locationsScroller",
     {
         mode: 'horizontal-snap'
