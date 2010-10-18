@@ -3,15 +3,14 @@ function StageAssistant() {
 }
 
 StageAssistant.prototype.setup = function() {
-    
-    grpnMenuAttributes = { omitDefaultItems: true };
-    grpnMenuModel = {
+    this.grpnMenuAttributes = { omitDefaultItems: true };
+    this.grpnMenuModel = {
         visible: true,
         items: [
-            {label: "About grpn...", command: 'do-aboutGrpn'}
-            //Mojo.Menu.editItem,
-            //Mojo.Menu.prefsItem,
-            //Mojo.Menu.helpItem
+            Mojo.Menu.editItem,
+            {label: "About", command: 'do-aboutGrpn'},
+            Mojo.Menu.prefsItem,
+            Mojo.Menu.helpItem
         ]
     };
       
@@ -40,6 +39,8 @@ StageAssistant.prototype.handleCommand = function(event) {
                     ],
                     allowHTMLMessage: true
                 });
+                break;
+            default:
                 break;
         }
     }

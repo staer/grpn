@@ -21,7 +21,7 @@ DealsAssistant.prototype.setup = function() {
     
     
     // Main menu, attributes and model found in stage-assistant.js
-    this.controller.setupWidget(Mojo.Menu.appMenu, grpnMenuAttributes, grpnMenuModel);
+    this.controller.setupWidget(Mojo.Menu.appMenu, this.controller.stageController.assistant.grpnMenuAttributes, this.controller.stageController.assistant.grpnMenuModel);
 
     
     this.controller.setupWidget(Mojo.Menu.viewMenu, {}, this.viewMenuModel = {
