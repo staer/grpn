@@ -1,3 +1,8 @@
+// Declare a global GRPN namespace to hold a few globals that will be useful to have
+var GRPN = {};
+GRPN.client_id = "afee02ef734231d1ddfe2a9594956eeb2e702b9f";
+GRPN.version = "1.0.0";
+
 function StageAssistant() {
 	/* this is the creator function for your stage assistant object */
 }
@@ -32,7 +37,7 @@ StageAssistant.prototype.handleCommand = function(event) {
             case 'do-aboutGrpn':
                 currentScene.showAlertDialog({
                     onChoose: function(value) {},
-                    title: "grpn - WebOS Groupon Client",
+                    title: "grpn - " + GRPN.version.toString(),
                     message: message,
                     choices:[
                         {label: "OK", value:""}
