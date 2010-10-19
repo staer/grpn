@@ -24,8 +24,6 @@ StageAssistant.prototype.handleCommand = function(event) {
        template: 'templates/about' 
     });
     
-    Mojo.Log.info(message);
-    
     var currentScene = this.controller.activeScene();
     if(event.type === Mojo.Event.command) {
         switch(event.command) {
