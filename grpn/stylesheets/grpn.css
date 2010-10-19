@@ -22,7 +22,12 @@
   height: 96px;
 }
 
+/* Deprecated */
 .dealListIcon {
+    background: url(../images/list-view-header-icon.png) left center no-repeat;
+}
+
+.cityListIcon {
     background: url(../images/list-view-header-icon.png) left center no-repeat;
 }
 

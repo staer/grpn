@@ -35,10 +35,10 @@ DealDetailsAssistant.prototype.setup = function() {
         items: [
             {
                 items: [
-                    { icon: "dealListIcon", command: "dealList", label: "", width: 60},
+                    { icon: "cityListIcon", command: "cityList", label: "", width: 60},
                     { label: "", width: this.controller.stageController.assistant.getDimensions().width-120 },
                     // TODO: Need an icon for the city listing option
-                    { icon: 'forward', command: 'cityList', label: "", width: 60}
+                    { icon: 'forward', command: 'dealList', label: "", width: 60}
                 ]
             }
         ]
