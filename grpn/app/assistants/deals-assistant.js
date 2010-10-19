@@ -76,28 +76,31 @@ DealsAssistant.prototype.selectDeal = function(event) {
 };
 
 DealsAssistant.prototype.refreshList = function() {
-  // Refresh the list 
-  var that = this;
+    // Refresh the list 
+    var that = this;
   
-  var request = new Ajax.Request("http://api.groupon.com/v2/deals.json", {
-      method: "get",
-      parameters: {
-          client_id: Mojo.appInfo.client_id,
-          division_id: this.divisionId
-      },
-      onComplete: function(response) {
-          that.scrim.hide();
+    var request = new Ajax.Request("http://api.groupon.com/v2/deals.json", {
+        method: "get",
+        parameters: {
+            client_id: Mojo.appInfo.client_id,
+            division_id: this.divisionId
+        },
+        onComplete: function(response) {
+            that.scrim.hide();
         
-          // Update the title
-          that.viewMenuModel.items[0].items[0].label = "Deals for " + that.divisionName;
-          that.controller.modelChanged(that.viewMenuModel);
+            // Update the title
+            that.viewMenuModel.items[0].items[0].label = "Deals for " + that.divisionName;
+            that.controller.modelChanged(that.viewMenuModel);
           
-          // Update the list
-          that.dealListModel.items = response.responseJSON.deals;
-          that.controller.modelChanged(that.dealListModel);
-          
-      }
-  });
+            // Update the list
+            that.dealListModel.items = response.responseJSON.deals;
+            that.controller.modelChanged(that.dealListModel);  
+        },
+        onFailure: function() {
+	        // Display a API connection error dialog
+	        that.controller.stageController.assistant.showAPIErrorDialog();
+        }
+    });
  };
 
 DealsAssistant.prototype.activate = function(event) {

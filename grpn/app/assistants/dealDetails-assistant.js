@@ -215,7 +215,11 @@ DealDetailsAssistant.prototype.refreshDeal = function() {
            that.scrim.hide();
            that.deal = response.responseJSON.deal;
            that.populatePage(response.responseJSON.deal);
-       } 
+       },
+       onFailure: function() {
+	        // Display a API connection error dialog
+	        that.controller.stageController.assistant.showAPIErrorDialog();
+	    }
     });
 };
 

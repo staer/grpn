@@ -70,15 +70,16 @@ CitiesAssistant.prototype.searchCities = function(filterString, listWidget, offs
 
 // Transition to the show deals scene for the selected City
 CitiesAssistant.prototype.selectCity = function(event) {
-    
     var db = new Mojo.Depot({name: 'com.staeronline.grpn'}, function(){
         db.add('defaultCity', {
           id: event.item.id,
           name: event.item.name
         }, function() {
-            // On Success
+            // On Success we don't have any special logic
         }, function() {
-            // On failure
+            // On failure we don't particularly care, the user will just be
+            // brought back to the city selection screen on startup instead
+            // of going to the most recently viewed city.
         });
     });
     Mojo.Controller.stageController.popScenesTo();
@@ -96,9 +97,12 @@ CitiesAssistant.prototype.refreshList = function() {
         onComplete: function(response) {
             that.scrim.hide();
             that.cityListModel.items = response.responseJSON.divisions;
-            that.controller.modelChanged(that.cityListModel);
-            
-	    } 
+            that.controller.modelChanged(that.cityListModel);            
+	    } ,
+	    onFailure: function() {
+	        // Display a API connection error dialog
+	        that.controller.stageController.assistant.showAPIErrorDialog();
+	    }
 	});
 };
 

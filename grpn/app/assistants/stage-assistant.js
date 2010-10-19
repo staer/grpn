@@ -43,3 +43,16 @@ StageAssistant.prototype.handleCommand = function(event) {
         }
     }
 };
+
+StageAssistant.prototype.showAPIErrorDialog = function() {
+    var currentScene = this.controller.activeScene();
+    currentScene.showAlertDialog({
+        onChoose: function(value) {},
+        title: "Error",
+        message: "There was an error communicating with the Groupon&trade; API. Please check your connection,  wait a a short time since Groupon&trade; may be having problems and then try again. If the problem persists please contact the developer.",
+        choices: [
+            {label: "OK", value:""}
+        ],
+        allowHTMLMessage: true
+    });
+};
