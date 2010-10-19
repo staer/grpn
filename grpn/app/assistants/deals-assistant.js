@@ -29,15 +29,13 @@ DealsAssistant.prototype.setup = function() {
         items: [
             {
                 items: [
-                    { label: "", width: 260 },
+                    { label: "", width: this.controller.stageController.assistant.getDimensions().width-60 },
                     // TODO: Need an icon for the city listing option
-                    { icon: 'forward', command: 'cityList', label: ""}
+                    { icon: 'forward', command: 'cityList', label: "", width: 60}
                 ]
             }
         ]
     });
-    
-    
     
     this.dealListModel = {
         items: []
@@ -55,6 +53,15 @@ DealsAssistant.prototype.setup = function() {
     
     this.scrim.show();
     this.refreshList();
+};
+
+DealsAssistant.prototype.orientationChanged = function(orientation) {
+    // On orientation change we have to resize some of the elements on the screen
+    
+    // Update the width of the main label on the top menu to fit the full width
+    this.viewMenuModel.items[0].items[0].width = this.controller.stageController.assistant.getDimensions().width-60;
+    this.controller.modelChanged(this.viewMenuModel);
+    
 };
 
 DealsAssistant.prototype.handleCommand = function(event) {

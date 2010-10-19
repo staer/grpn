@@ -35,10 +35,10 @@ DealDetailsAssistant.prototype.setup = function() {
         items: [
             {
                 items: [
-                    { icon: "dealListIcon", command: "dealList", label: ""},
-                    { label: "", width: 200 },
+                    { icon: "dealListIcon", command: "dealList", label: "", width: 60},
+                    { label: "", width: this.controller.stageController.assistant.getDimensions().width-120 },
                     // TODO: Need an icon for the city listing option
-                    { icon: 'forward', command: 'cityList', label: ""}
+                    { icon: 'forward', command: 'cityList', label: "", width: 60}
                 ]
             }
         ]
@@ -106,6 +106,14 @@ DealDetailsAssistant.prototype.setup = function() {
     this.scrim.show();
     this.refreshDeal();
 
+};
+
+// Handle orientation changes with grace
+DealDetailsAssistant.prototype.orientationChanged = function(orientation) {
+    
+    // The viewMenu needs to be resized to fit the whole screen
+    this.viewMenuModel.items[0].items[1].width = this.controller.stageController.assistant.getDimensions().width-120;
+    this.controller.modelChanged(this.viewMenuModel);
 };
 
 DealDetailsAssistant.prototype.handleCommand = function(event) {

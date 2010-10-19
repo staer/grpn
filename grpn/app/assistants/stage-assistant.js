@@ -3,6 +3,10 @@ function StageAssistant() {
 }
 
 StageAssistant.prototype.setup = function() {
+    if (this.controller.setWindowOrientation) {
+        this.controller.setWindowOrientation("free");
+    }
+    
     this.grpnMenuAttributes = { omitDefaultItems: true };
     this.grpnMenuModel = {
         visible: true,
@@ -55,4 +59,25 @@ StageAssistant.prototype.showAPIErrorDialog = function() {
         ],
         allowHTMLMessage: true
     });
+};
+
+// Get the stage dimenations based on the current device orientation
+StageAssistant.prototype.getDimensions = function() {
+    var width = Mojo.Environment.DeviceInfo.screenWidth;
+    var height = Mojo.Environment.DeviceInfo.screenHeight;
+    
+    switch(this.controller.getWindowOrientation()) {
+        case 'left':
+        case 'right':
+            height = Mojo.Environment.DeviceInfo.screenWidth;
+            width = Mojo.Environment.DeviceInfo.screenHeight;
+            break;
+        default:
+            break;
+    }
+    
+    return {
+        width: width,
+        height: height
+    };
 };

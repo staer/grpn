@@ -8,7 +8,7 @@ function SplashAssistant() {
 SplashAssistant.prototype.setup = function() {
     // Set the wrapper table to the full device height so we can vertically center
     // the splash image
-	this.controller.get("wrapper").setStyle({height: Mojo.Environment.DeviceInfo.screenHeight + "px"});
+	this.controller.get("wrapper").setStyle({height: this.controller.stageController.assistant.getDimensions().height + "px"});
 
     // Set up a short timer to hide the splash and either go to:
     //    a.) The city selection (if no default is set)
@@ -27,6 +27,10 @@ SplashAssistant.prototype.setup = function() {
         });
     }, 2000);
 
+};
+
+SplashAssistant.prototype.orientationChanged = function(orientation) {
+    this.controller.get("wrapper").setStyle({ height: this.controller.stageController.assistant.getDimensions().height + "px" });
 };
 
 SplashAssistant.prototype.activate = function(event) {
