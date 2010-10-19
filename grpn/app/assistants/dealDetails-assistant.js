@@ -139,6 +139,9 @@ DealDetailsAssistant.prototype.handleCommand = function(event) {
     if(event.type === Mojo.Event.command) {
         switch(event.command) {
             case 'dealList':
+                // When going to a deal list, the back gesture should not go anywhere
+                // the deal list for a city is the "root" of the app
+                Mojo.Controller.stageController.popScenesTo();
                 Mojo.Controller.stageController.pushScene("deals", this.deal.division.id, this.deal.division.name);
                 break;
             case 'cityList':

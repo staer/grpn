@@ -69,8 +69,8 @@ DealsAssistant.prototype.handleCommand = function(event) {
     if(event.type === Mojo.Event.command) {
         switch(event.command) {
             case 'cityList':
-                Mojo.Controller.stageController.popScenesTo();
-                Mojo.Controller.stageController.swapScene("cities");
+                //Mojo.Controller.stageController.popScenesTo();
+                Mojo.Controller.stageController.pushScene("cities");
                 break;
             default:
                 break;
@@ -79,8 +79,8 @@ DealsAssistant.prototype.handleCommand = function(event) {
 };
 
 DealsAssistant.prototype.selectDeal = function(event) {
-    Mojo.Controller.stageController.popScenesTo();
-    Mojo.Controller.stageController.swapScene("dealDetails", event.item.id);
+    //Mojo.Controller.stageController.popScenesTo();
+    Mojo.Controller.stageController.pushScene("dealDetails", event.item.id);
 };
 
 DealsAssistant.prototype.refreshList = function() {
