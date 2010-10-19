@@ -275,10 +275,7 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
         this.controller.get("detailsDrawerContent").innerHTML = html;
     } else {
         this.controller.get("detailsDrawerContent").innerHTML = "None Available";
-    } 
-        
-    // TODO: Use templates instead of manually building HTML
-    // See: Mojo.View.render for template rendering    
+    }   
         
     html = "";
     for(i = 0; i < deal.redemptionLocations.length;i++) 
@@ -324,9 +321,6 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     
     this.locationsScrollerModel.snapElements.x = this.controller.select('.scrollerItem');
     this.controller.modelChanged(this.locationsScrollerModel);
-    
-
-
 };
 
 
