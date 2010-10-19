@@ -91,16 +91,16 @@ DealDetailsAssistant.prototype.setup = function() {
     this.controller.listen("viewMapButton", Mojo.Event.tap, this.viewMapHandler);
     
     this.descriptionArrowHandler = this.drawerToggleFactory(this.descriptionDrawerModel, "descriptionArrow").bindAsEventListener(this);
-    this.controller.listen("descriptionArrow", Mojo.Event.tap, this.descriptionArrowHandler);
+    this.controller.listen("descriptionBar", Mojo.Event.tap, this.descriptionArrowHandler);
     
     this.detailsArrowHandler = this.drawerToggleFactory(this.detailsDrawerModel, "detailsArrow").bindAsEventListener(this);
-    this.controller.listen("detailsArrow", Mojo.Event.tap, this.detailsArrowHandler);
+    this.controller.listen("detailsBar", Mojo.Event.tap, this.detailsArrowHandler);
     
     this.highlightsArrowHandler = this.drawerToggleFactory(this.highlightsDrawerModel, "highlightsArrow").bindAsEventListener(this);
-    this.controller.listen("highlightsArrow", Mojo.Event.tap, this.highlightsArrowHandler);
+    this.controller.listen("highlightsBar", Mojo.Event.tap, this.highlightsArrowHandler);
     
     this.locationsArrowHandler = this.drawerToggleFactory(this.locationsDrawerModel, "locationsArrow").bindAsEventListener(this);
-    this.controller.listen("locationsArrow", Mojo.Event.tap, this.locationsArrowHandler);
+    this.controller.listen("locationsBar", Mojo.Event.tap, this.locationsArrowHandler);
        
        
     this.scrim.show();
