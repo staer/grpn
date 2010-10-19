@@ -110,10 +110,29 @@ DealDetailsAssistant.prototype.setup = function() {
 
 // Handle orientation changes with grace
 DealDetailsAssistant.prototype.orientationChanged = function(orientation) {
+    var deal = this.deal;
+    var width = this.controller.stageController.assistant.getDimensions().width;
+    var scrollerWidth = width - 10;
+    var scrollerCount = deal.redemptionLocations.length;//>0 ? deal.redemptionLocations.length : 1;
     
     // The viewMenu needs to be resized to fit the whole screen
-    this.viewMenuModel.items[0].items[1].width = this.controller.stageController.assistant.getDimensions().width-120;
+    this.viewMenuModel.items[0].items[1].width = width - 120;
     this.controller.modelChanged(this.viewMenuModel);
+    
+    // Change the locations scroller to have the correct width
+    Mojo.Log.info("W ", scrollerWidth);
+    this.controller.select('.scrollerItem').each(function(item){
+        item.setStyle({ 
+            width: scrollerWidth + 'px',
+            'min-width': scrollerWidth + 'px'
+         });
+        
+    });
+    this.controller.get("scrollerContainer").setStyle({width: scrollerWidth*deal.redemptionLocations.length+"px"});
+    this.locationsScrollerModel.snapElements.x = this.controller.select('.scrollerItem');
+    this.controller.modelChanged(this.locationsScrollerModel);
+
+
 };
 
 DealDetailsAssistant.prototype.handleCommand = function(event) {
@@ -290,9 +309,11 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     }   
         
     html = "";
+    var scrollerWidth = this.controller.stageController.assistant.getDimensions().width-10;
+    
     for(i = 0; i < deal.redemptionLocations.length;i++) 
     {   
-        html += "<div class='scrollerItem'>";
+        html += "<div class='scrollerItem' style='width: " + scrollerWidth + "px;'>";
         if(deal.merchant.websiteUrl) {
             html += "<a href='" + deal.merchant.websiteUrl + "'>";
         }
@@ -320,13 +341,13 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
         html += "</div>";
         html += "</div>";
     }
-    this.controller.get("scrollerContainer").setStyle({width: 310*deal.redemptionLocations.length+"px"});
+    this.controller.get("scrollerContainer").setStyle({width: scrollerWidth*deal.redemptionLocations.length+"px"});
     this.controller.get("scrollerContainer").innerHTML = html;
     
     // Hide the "view map" button and add 
     if(deal.redemptionLocations.length===0) {
         this.controller.get("scrollerContainer").innerHTML = "<div class='scrollerItem'>Location Information Unavailable<br/></div>";
-        this.controller.get("scrollerContainer").setStyle({width: 310*deal.redemptionLocations.length+"px"});
+        this.controller.get("scrollerContainer").setStyle({width: scrollerWidth*deal.redemptionLocations.length+"px"});
         this.controller.get("viewMapButton").hide();
     }
     
@@ -334,7 +355,6 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     this.locationsScrollerModel.snapElements.x = this.controller.select('.scrollerItem');
     this.controller.modelChanged(this.locationsScrollerModel);
 };
-
 
 DealDetailsAssistant.prototype.activate = function(event) {
 	/* put in event handlers here that should only be in effect when this scene is active. For
