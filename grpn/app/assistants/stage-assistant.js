@@ -15,7 +15,7 @@ StageAssistant.prototype.setup = function() {
         items: [
             Mojo.Menu.editItem,
             {label: "About", command: 'do-aboutGrpn'},
-            Mojo.Menu.prefsItem,
+            //Mojo.Menu.prefsItem,
             Mojo.Menu.helpItem
         ]
     };
@@ -42,22 +42,38 @@ StageAssistant.prototype.handleCommand = function(event) {
     });
     
     var currentScene = this.controller.activeScene();
-    if(event.type === Mojo.Event.command) {
-        switch(event.command) {
-            case 'do-aboutGrpn':
-                currentScene.showAlertDialog({
-                    onChoose: function(value) {},
-                    title: Mojo.appInfo.title + " - v" + Mojo.appInfo.version,
-                    message: aboutMessage,
-                    choices:[
-                        {label: "OK", value:""}
-                    ],
-                    allowHTMLMessage: true
-                });
-                break;
-            default:
-                break;
-        }
+    
+    switch(event.type) {
+        case Mojo.Event.commandEnable:
+            switch(event.command) {
+                case Mojo.Menu.helpCmd:
+                    event.stopPropagation();
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case Mojo.Event.command:
+            switch(event.command) {
+                case 'do-aboutGrpn':
+                    currentScene.showAlertDialog({
+                        onChoose: function(value) {},
+                        title: Mojo.appInfo.title + " - v" + Mojo.appInfo.version,
+                        message: aboutMessage,
+                        choices:[
+                            {label: "OK", value:""}
+                        ],
+                        allowHTMLMessage: true
+                    });
+                    break;  
+                case Mojo.Menu.helpCmd:
+                    this.controller.pushAppSupportInfoScene();
+                    break;
+                 default: break;
+            }
+            break;
+        default:
+            break;
     }
 };
 
