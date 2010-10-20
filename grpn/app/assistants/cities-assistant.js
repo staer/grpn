@@ -70,18 +70,6 @@ CitiesAssistant.prototype.searchCities = function(filterString, listWidget, offs
 
 // Transition to the show deals scene for the selected City
 CitiesAssistant.prototype.selectCity = function(event) {
-    var db = new Mojo.Depot({name: Mojo.appInfo.depot_name}, function(){
-        db.add('defaultCity', {
-          id: event.item.id,
-          name: event.item.name
-        }, function() {
-            // On Success we don't have any special logic
-        }, function() {
-            // On failure we don't particularly care, the user will just be
-            // brought back to the city selection screen on startup instead
-            // of going to the most recently viewed city.
-        });
-    });
     Mojo.Controller.stageController.popScenesTo();
     Mojo.Controller.stageController.swapScene("deals", event.item.id, event.item.name);
 };

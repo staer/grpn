@@ -2,6 +2,19 @@ function DealsAssistant(divisionId, divisionName) {
     this.divisionId = divisionId;
     this.divisionName = divisionName;
     
+    var db = new Mojo.Depot({name: Mojo.appInfo.depot_name}, function(){
+        db.add('defaultCity', {
+          id: divisionId,
+          name: divisionName
+        }, function() {
+            // On Success we don't have any special logic
+        }, function() {
+            // On failure we don't particularly care, the user will just be
+            // brought back to the city selection screen on startup instead
+            // of going to the most recently viewed city.
+        });
+    });
+    
     /* this is the creator function for your scene assistant object. It will be passed all the 
 	   additional parameters (after the scene name) that were passed to pushScene. The reference
 	   to the scene controller (this.controller) has not be established yet, so any initialization
