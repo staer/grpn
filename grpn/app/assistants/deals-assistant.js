@@ -29,10 +29,10 @@ DealsAssistant.prototype.setup = function() {
         items: [
             {
                 items: [
-                    { icon: 'cityListIcon', command: 'cityList', label: '', width: 60 },
+                    { icon: 'cityListIcon', command: 'cmd-cityList', label: '', width: 60 },
                     { label: "", width: this.controller.stageController.assistant.getDimensions().width-120 },
                     // TODO: Need an icon for the city listing option
-                    { icon: 'forward', command: 'cmd-favs', label: "", width: 60}
+                    { icon: 'favoriteIcon', command: 'cmd-favorites', label: "", width: 60}
                 ]
             }
         ]
@@ -66,11 +66,22 @@ DealsAssistant.prototype.orientationChanged = function(orientation) {
 };
 
 DealsAssistant.prototype.handleCommand = function(event) {
+    var favIcon = this.controller.select('.favoriteIcon')[0];
+    
+    
     if(event.type === Mojo.Event.command) {
         switch(event.command) {
-            case 'cityList':
+            case 'cmd-cityList':
                 //Mojo.Controller.stageController.popScenesTo();
                 Mojo.Controller.stageController.pushScene("cities");
+                break;
+            case 'cmd-favorites':
+                this.controller.popupSubmenu({
+                    onChoose: function() {},
+                    placeNear: favIcon,
+                    items: [
+                    ]
+                });
                 break;
             default:
                 break;
@@ -97,7 +108,7 @@ DealsAssistant.prototype.refreshList = function() {
             that.scrim.hide();
         
             // Update the title
-            that.viewMenuModel.items[0].items[0].label = "Deals for " + that.divisionName;
+            that.viewMenuModel.items[0].items[1].label = that.divisionName;
             that.controller.modelChanged(that.viewMenuModel);
           
             // Update the list

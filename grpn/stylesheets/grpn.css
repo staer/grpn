@@ -31,6 +31,18 @@
     background: url(../images/list-view-header-icon.png) left center no-repeat;
 }
 
+.starOnIcon {
+    background: url(../images/star-on.png) left center no-repeat;
+}
+
+.starOffIcon {
+    background: url(../images/star-off.png) left center no-repeat;
+}
+
+.favoriteIcon {
+    background: url(../images/accounts-icon-favorite-gray.png) left center no-repeat;
+}
+
 p {
     padding-top: 0px;
     padding-bottom: 5px;

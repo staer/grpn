@@ -35,10 +35,10 @@ DealDetailsAssistant.prototype.setup = function() {
         items: [
             {
                 items: [
-                    { icon: "cityListIcon", command: "cityList", label: "", width: 60},
+                    { icon: "cityListIcon", command: "cmd-cityList", label: "", width: 60},
                     { label: "", width: this.controller.stageController.assistant.getDimensions().width-120 },
                     // TODO: Need an icon for the city listing option
-                    { icon: 'forward', command: 'dealList', label: "", width: 60}
+                    { icon: 'favoriteIcon', command: 'cmd-favorites', label: "", width: 60}
                 ]
             }
         ]
@@ -136,16 +136,20 @@ DealDetailsAssistant.prototype.orientationChanged = function(orientation) {
 };
 
 DealDetailsAssistant.prototype.handleCommand = function(event) {
+    var favIcon = this.controller.select('.favoriteIcon')[0];
+    
     if(event.type === Mojo.Event.command) {
         switch(event.command) {
-            case 'dealList':
-                // When going to a deal list, the back gesture should not go anywhere
-                // the deal list for a city is the "root" of the app
-                Mojo.Controller.stageController.popScenesTo();
-                Mojo.Controller.stageController.pushScene("deals", this.deal.division.id, this.deal.division.name);
-                break;
-            case 'cityList':
+            case 'cmd-cityList':
                 Mojo.Controller.stageController.pushScene("cities");
+                break;
+            case 'cmd-favorites':
+                this.controller.popupSubmenu({
+                    onChoose: function() {},
+                    placeNear: favIcon,
+                    items: [                        
+                    ]
+                });
                 break;
             default:
                 break;
