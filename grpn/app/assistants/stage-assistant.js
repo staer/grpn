@@ -105,10 +105,11 @@ StageAssistant.prototype.getDimensions = function() {
 StageAssistant.prototype.showFavoritesList = function() {
     var sceneController = this.controller.activeScene();
     var favIcon = sceneController.select('.favoriteIcon')[0];
+    var that = this;
     
     var items = [];
     for(var i=0; i< this.favoritesList.length; i++) {
-        items[i] = { label: this.favoritesList[i].name, command: 'cmd-'+this.favoritesList[i].id };
+        items[i] = { label: this.favoritesList[i].name, command: this.favoritesList[i].id };
     }
     
     // Sort the menu alphabetically
@@ -123,7 +124,14 @@ StageAssistant.prototype.showFavoritesList = function() {
     
     // Open the popup menu with the favs!
     sceneController.popupSubmenu({
-        onChoose: function() {},
+        onChoose: function(value) {
+            // Value is the command, i.e. the favorite ID
+            var fav = that.getFavoriteById(value);
+            if(fav!==null) {
+                Mojo.Controller.stageController.popScenesTo();
+                Mojo.Controller.stageController.swapScene("deals", fav.id, fav.name);
+            }
+        },
         placeNear: favIcon,
         items: items
     });
@@ -136,7 +144,7 @@ StageAssistant.prototype.saveFavorites = function() {
     var that = this;
     var done = false;
     var db = new Mojo.Depot({name: Mojo.appInfo.depot_name}, function() {
-        db.add('favoritesList', that.favoritesList, function(){ Mojo.Log.info("Favs saved!");/* Success */}, function(){ /* Error */});
+        db.add('favoritesList', that.favoritesList, function(){/* Success */}, function(){ /* Error */});
     }, function() { /* Error */});
 };
 
@@ -165,4 +173,14 @@ StageAssistant.prototype.addFavorite = function(fav) {
     if(this.isFavorite(fav)===-1) {
         this.favoritesList[this.favoritesList.length] = fav;        
     }
+};
+
+// Gets a favorite out of the list by it's ID, or null
+StageAssistant.prototype.getFavoriteById = function(id) {
+    for(var i=0; i<this.favoritesList.length; i++) {
+        if(this.favoritesList[i].id===id) {
+            return this.favoritesList[i];
+        }
+    }
+    return null;
 };

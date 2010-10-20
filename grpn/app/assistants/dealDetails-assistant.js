@@ -120,7 +120,6 @@ DealDetailsAssistant.prototype.orientationChanged = function(orientation) {
     this.controller.modelChanged(this.viewMenuModel);
     
     // Change the locations scroller to have the correct width
-    Mojo.Log.info("W ", scrollerWidth);
     this.controller.select('.scrollerItem').each(function(item){
         item.setStyle({ 
             width: scrollerWidth + 'px',
