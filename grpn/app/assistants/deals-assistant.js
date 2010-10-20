@@ -38,6 +38,20 @@ DealsAssistant.prototype.setup = function() {
         ]
     });
     
+    /* Check to see if this city is on the favorites list */
+    var fav = {
+        name: this.divisionName,
+        id: this.divisionId
+    };
+    var isFav = this.controller.stageController.assistant.isFavorite(fav) !== -1;
+    this.controller.setupWidget(Mojo.Menu.commandMenu, {}, this.cmdMenuModel = {
+        visible: true,
+        items: [
+            {icon: 'refresh', label: '', command: 'cmd-refresh'},
+            {icon: (isFav ? 'starOnIcon' : 'starOffIcon'), label: '', command: 'cmd-toggleFavorite'}
+        ]
+    });
+    
     this.dealListModel = {
         items: []
     };   
@@ -76,12 +90,26 @@ DealsAssistant.prototype.handleCommand = function(event) {
                 Mojo.Controller.stageController.pushScene("cities");
                 break;
             case 'cmd-favorites':
-                this.controller.popupSubmenu({
-                    onChoose: function() {},
-                    placeNear: favIcon,
-                    items: [
-                    ]
-                });
+                this.controller.stageController.assistant.showFavoritesList();
+                break;
+            case 'cmd-refresh':
+                this.scrim.show();
+                this.refreshList();
+                break;
+            case 'cmd-toggleFavorite':
+                var fav = {
+                    name: this.divisionName,
+                    id: this.divisionId
+                };
+                if(this.controller.stageController.assistant.isFavorite(fav)!==-1) {
+                    this.controller.stageController.assistant.removeFavorite(fav);
+                    this.cmdMenuModel.items[1].icon = 'starOffIcon';
+                } else {
+                    this.controller.stageController.assistant.addFavorite(fav);
+                    this.cmdMenuModel.items[1].icon = 'starOnIcon';
+                }
+                this.controller.stageController.assistant.saveFavorites();
+                this.controller.modelChanged(this.cmdMenuModel);
                 break;
             default:
                 break;
@@ -90,7 +118,6 @@ DealsAssistant.prototype.handleCommand = function(event) {
 };
 
 DealsAssistant.prototype.selectDeal = function(event) {
-    //Mojo.Controller.stageController.popScenesTo();
     Mojo.Controller.stageController.pushScene("dealDetails", event.item.id);
 };
 

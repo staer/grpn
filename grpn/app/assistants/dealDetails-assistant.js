@@ -144,12 +144,7 @@ DealDetailsAssistant.prototype.handleCommand = function(event) {
                 Mojo.Controller.stageController.pushScene("cities");
                 break;
             case 'cmd-favorites':
-                this.controller.popupSubmenu({
-                    onChoose: function() {},
-                    placeNear: favIcon,
-                    items: [                        
-                    ]
-                });
+                this.controller.stageController.assistant.showFavoritesList();
                 break;
             default:
                 break;

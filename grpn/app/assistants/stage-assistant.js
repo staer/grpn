@@ -3,6 +3,8 @@ function StageAssistant() {
 }
 
 StageAssistant.prototype.setup = function() {
+    var that = this;
+    
     if (this.controller.setWindowOrientation) {
         this.controller.setWindowOrientation("free");
     }
@@ -17,13 +19,24 @@ StageAssistant.prototype.setup = function() {
             Mojo.Menu.helpItem
         ]
     };
-      
-    this.controller.pushScene("splash");
+    
+    // Load the favoritesList from the Depot object into memory, will save
+    // it again on app close.
+    var db = new Mojo.Depot({name: Mojo.appInfo.depot_name}, function() {
+        db.get('favoritesList', function(list) {
+            if(list===null) {
+                list = [];
+            }
+            that.favoritesList = list;
+            that.controller.pushScene("splash");
+        }, function() {
+            that.controller.pushScene("splash");
+        });
+    });
 };
 
-
 StageAssistant.prototype.handleCommand = function(event) {
-    var message = Mojo.View.render({
+    var aboutMessage = Mojo.View.render({
        object: {},
        template: 'templates/about' 
     });
@@ -35,7 +48,7 @@ StageAssistant.prototype.handleCommand = function(event) {
                 currentScene.showAlertDialog({
                     onChoose: function(value) {},
                     title: Mojo.appInfo.title + " - v" + Mojo.appInfo.version,
-                    message: message,
+                    message: aboutMessage,
                     choices:[
                         {label: "OK", value:""}
                     ],
@@ -80,4 +93,76 @@ StageAssistant.prototype.getDimensions = function() {
         width: width,
         height: height
     };
+};
+
+// ===========================
+// = Favorites Handling Code =
+// ===========================
+// NOTE: This can probably be moved to it's own module instead of residing in
+// the stage controller
+
+// Pop up a favorites list near the favorites list button
+StageAssistant.prototype.showFavoritesList = function() {
+    var sceneController = this.controller.activeScene();
+    var favIcon = sceneController.select('.favoriteIcon')[0];
+    
+    var items = [];
+    for(var i=0; i< this.favoritesList.length; i++) {
+        items[i] = { label: this.favoritesList[i].name, command: 'cmd-'+this.favoritesList[i].id };
+    }
+    
+    // Sort the menu alphabetically
+    items.sort(function(a,b) {
+        if(a.label.toLowerCase() < b.label.toLowerCase()) {
+            return -1;
+        } else if (b.label.toLowerCase() < a.label.toLowerCase()) {
+            return 1;
+        }
+        return 0;    
+    });
+    
+    // Open the popup menu with the favs!
+    sceneController.popupSubmenu({
+        onChoose: function() {},
+        placeNear: favIcon,
+        items: items
+    });
+    
+    return;
+};
+
+// Save all the favorites back to a Depot store
+StageAssistant.prototype.saveFavorites = function() {
+    var that = this;
+    var done = false;
+    var db = new Mojo.Depot({name: Mojo.appInfo.depot_name}, function() {
+        db.add('favoritesList', that.favoritesList, function(){ Mojo.Log.info("Favs saved!");/* Success */}, function(){ /* Error */});
+    }, function() { /* Error */});
+};
+
+// Check to see if a 'fav' is in the favoritesList
+// Returns the index (> 0) if it is found, -1 if it is not
+StageAssistant.prototype.isFavorite = function(fav) {
+    var i;
+    for(i = 0; i < this.favoritesList.length; i++) {
+        if(this.favoritesList[i].name===fav.name && this.favoritesList[i].id===fav.id) {
+            return i;
+        }
+    }
+    return -1;
+};
+
+// If the 'fav' is in the list, it will be spliced away
+StageAssistant.prototype.removeFavorite = function(fav) {
+    var i = this.isFavorite(fav);
+    if(i!==-1) {
+        this.favoritesList.splice(i, 1);
+    }
+};
+
+// If the 'fav' is not in the list, it will be appended
+StageAssistant.prototype.addFavorite = function(fav) {
+    if(this.isFavorite(fav)===-1) {
+        this.favoritesList[this.favoritesList.length] = fav;        
+    }
 };

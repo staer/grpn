@@ -6,5 +6,6 @@
 	"main": "index.html",
 	"title": "grpn",
 	"icon": "icon.png",
-	"client_id": "afee02ef734231d1ddfe2a9594956eeb2e702b9f"
+	"client_id": "afee02ef734231d1ddfe2a9594956eeb2e702b9f",
+	"depot_name": "com.staeronline.grpn"
 }
