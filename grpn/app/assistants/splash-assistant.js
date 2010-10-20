@@ -16,7 +16,7 @@ SplashAssistant.prototype.setup = function() {
     
     // TODO: Handle errors with DB opening and key retrival
     setTimeout(function() {
-        var db = new Mojo.Depot({name: 'com.staeronline.grpn'}, function(){
+        var db = new Mojo.Depot({name: Mojo.appInfo.depot_name}, function(){
             db.get('defaultCity', function(city){
                 if(city===null) {
                     Mojo.Controller.stageController.swapScene("cities");

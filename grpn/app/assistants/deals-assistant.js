@@ -2,10 +2,20 @@ function DealsAssistant(divisionId, divisionName) {
     this.divisionId = divisionId;
     this.divisionName = divisionName;
     
+    /* this is the creator function for your scene assistant object. It will be passed all the 
+	   additional parameters (after the scene name) that were passed to pushScene. The reference
+	   to the scene controller (this.controller) has not be established yet, so any initialization
+	   that needs the scene controller should be done in the setup function below. */
+}
+
+DealsAssistant.prototype.setup = function() {
+    var that = this;
+    
+    // Save this deal list as the most recent city visited
     var db = new Mojo.Depot({name: Mojo.appInfo.depot_name}, function(){
         db.add('defaultCity', {
-          id: divisionId,
-          name: divisionName
+          id: that.divisionId,
+          name: that.divisionName
         }, function() {
             // On Success we don't have any special logic
         }, function() {
@@ -15,13 +25,6 @@ function DealsAssistant(divisionId, divisionName) {
         });
     });
     
-    /* this is the creator function for your scene assistant object. It will be passed all the 
-	   additional parameters (after the scene name) that were passed to pushScene. The reference
-	   to the scene controller (this.controller) has not be established yet, so any initialization
-	   that needs the scene controller should be done in the setup function below. */
-}
-
-DealsAssistant.prototype.setup = function() {
     // ========
     // = Srim =
     // ========
