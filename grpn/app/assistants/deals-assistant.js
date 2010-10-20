@@ -104,9 +104,26 @@ DealsAssistant.prototype.handleCommand = function(event) {
                 if(this.controller.stageController.assistant.isFavorite(fav)!==-1) {
                     this.controller.stageController.assistant.removeFavorite(fav);
                     this.cmdMenuModel.items[1].icon = 'starOffIcon';
+                    this.controller.showAlertDialog({
+                        onChoose: function(){},
+                        title: 'Favorite Removed',
+                        message: "'" + fav.name + "' removed from favorites.",
+                        choices: [
+                            {label: "Ok", value:""}
+                        ]
+                    });
+                    
                 } else {
                     this.controller.stageController.assistant.addFavorite(fav);
                     this.cmdMenuModel.items[1].icon = 'starOnIcon';
+                    this.controller.showAlertDialog({
+                        onChoose: function(){},
+                        title: 'Favorite Added',
+                        message: "'" + fav.name + "' added to favorites.",
+                        choices: [
+                            {label: "Ok", value:""}
+                        ]
+                    });
                 }
                 this.controller.stageController.assistant.saveFavorites();
                 this.controller.modelChanged(this.cmdMenuModel);
