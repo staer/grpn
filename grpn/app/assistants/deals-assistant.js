@@ -74,7 +74,7 @@ DealsAssistant.prototype.orientationChanged = function(orientation) {
     // On orientation change we have to resize some of the elements on the screen
     
     // Update the width of the main label on the top menu to fit the full width
-    this.viewMenuModel.items[0].items[0].width = this.controller.stageController.assistant.getDimensions().width-120;
+    this.viewMenuModel.items[0].items[1].width = this.controller.stageController.assistant.getDimensions().width-120;
     this.controller.modelChanged(this.viewMenuModel);
     
 };
