@@ -19,9 +19,17 @@ SplashAssistant.prototype.setup = function() {
         var db = new Mojo.Depot({name: Mojo.appInfo.depot_name}, function(){
             db.get('defaultCity', function(city){
                 if(city===null) {
-                    Mojo.Controller.stageController.swapScene("cities");
+                    Mojo.Controller.stageController.swapScene({
+                        transition: Mojo.Transition.crossFade,
+                        name: "cities"
+                    });
+                    
                 } else {
-                    Mojo.Controller.stageController.swapScene("deals", city.id, city.name);
+                    Mojo.Controller.stageController.swapScene({
+                        transition: Mojo.Transition.crossFade,
+                        name: "deals"
+                    }, city.id, city.name);
+                    
                 }
             }); 
         });

@@ -145,7 +145,11 @@ StageAssistant.prototype.showFavoritesList = function() {
             var fav = that.getFavoriteById(value);
             if(fav!==null) {
                 Mojo.Controller.stageController.popScenesTo();
-                Mojo.Controller.stageController.swapScene("deals", fav.id, fav.name);
+                Mojo.Controller.stageController.swapScene({
+                    transition: Mojo.Transition.crossFade,
+                    name: "deals"
+                }, fav.id, fav.name);
+                
             }
         },
         placeNear: favIcon,
