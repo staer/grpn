@@ -113,7 +113,7 @@ DealDetailsAssistant.prototype.orientationChanged = function(orientation) {
     var deal = this.deal;
     var width = this.controller.stageController.assistant.getDimensions().width;
     var scrollerWidth = width - 10;
-    var scrollerCount = deal.redemptionLocations.length;//>0 ? deal.redemptionLocations.length : 1;
+    var scrollerCount = deal.options[0].redemptionLocations.length;//>0 ? deal.redemptionLocations.length : 1;
     
     // The viewMenu needs to be resized to fit the whole screen
     this.viewMenuModel.items[0].items[1].width = width - 120;
@@ -127,7 +127,7 @@ DealDetailsAssistant.prototype.orientationChanged = function(orientation) {
          });
         
     });
-    this.controller.get("scrollerContainer").setStyle({width: scrollerWidth*deal.redemptionLocations.length+"px"});
+    this.controller.get("scrollerContainer").setStyle({width: scrollerWidth*deal.options[0].redemptionLocations.length+"px"});
     this.locationsScrollerModel.snapElements.x = this.controller.select('.scrollerItem');
     this.controller.modelChanged(this.locationsScrollerModel);
 
@@ -208,7 +208,7 @@ DealDetailsAssistant.prototype.viewMap = function(event) {
     };
     
     // Build an address query string for google maps
-    var address = this.deal.redemptionLocations[snapIndex];
+    var address = this.deal.options[0].redemptionLocations[snapIndex];
     var addressString = getProperty(address, 'streetAddress1');
     addressString += getProperty(address, 'streetAddress2') + ' ';
     addressString += getProperty(address, 'city') + ' ';
@@ -312,7 +312,7 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     html = "";
     var scrollerWidth = this.controller.stageController.assistant.getDimensions().width-10;
     
-    for(i = 0; i < deal.redemptionLocations.length;i++) 
+    for(i = 0; i < deal.options[0].redemptionLocations.length;i++) 
     {   
         html += "<div class='scrollerItem' style='width: " + scrollerWidth + "px;'>";
         if(deal.merchant.websiteUrl) {
@@ -322,12 +322,12 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
         if(deal.merchant.websiteUrl) {
             html += "</a>";
         }
-        html += deal.redemptionLocations[i].name ? deal.redemptionLocations[i].name + "<br/>" : "";
-        html += deal.redemptionLocations[i].streetAddress1 ? deal.redemptionLocations[i].streetAddress1 + "<br/>" : "";
-        html += deal.redemptionLocations[i].streetAddress2 ? deal.redemptionLocations[i].streetAddress2 + "<br/>" : "";
-        html += deal.redemptionLocations[i].city ? deal.redemptionLocations[i].city + ", " : "";
-        html += deal.redemptionLocations[i].state ? deal.redemptionLocations[i].state + ", " : "";
-        html += deal.redemptionLocations[i].postalCode ? deal.redemptionLocations[i].postalCode + "<br/>" : "";
+        html += deal.options[0].redemptionLocations[i].name ? deal.options[0].redemptionLocations[i].name + "<br/>" : "";
+        html += deal.options[0].redemptionLocations[i].streetAddress1 ? deal.options[0].redemptionLocations[i].streetAddress1 + "<br/>" : "";
+        html += deal.options[0].redemptionLocations[i].streetAddress2 ? deal.options[0].redemptionLocations[i].streetAddress2 + "<br/>" : "";
+        html += deal.options[0].redemptionLocations[i].city ? deal.options[0].redemptionLocations[i].city + ", " : "";
+        html += deal.options[0].redemptionLocations[i].state ? deal.options[0].redemptionLocations[i].state + ", " : "";
+        html += deal.options[0].redemptionLocations[i].postalCode ? deal.options[0].redemptionLocations[i].postalCode + "<br/>" : "";
         
         // Add in the pager information if there are multiple locations with arrows
         // to cue the user that it scrolls left/right
@@ -335,20 +335,20 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
         if(i>0) {
             html += "&larr; ";
         }
-        html += (i+1).toString() + " of " + deal.redemptionLocations.length;
-        if(i<deal.redemptionLocations.length-1) {
+        html += (i+1).toString() + " of " + deal.options[0].redemptionLocations.length;
+        if(i<deal.options[0].redemptionLocations.length-1) {
             html += "  &rarr;";
         }
         html += "</div>";
         html += "</div>";
     }
-    this.controller.get("scrollerContainer").setStyle({width: scrollerWidth*deal.redemptionLocations.length+"px"});
+    this.controller.get("scrollerContainer").setStyle({width: scrollerWidth*deal.options[0].redemptionLocations.length+"px"});
     this.controller.get("scrollerContainer").innerHTML = html;
     
     // Hide the "view map" button and add 
-    if(deal.redemptionLocations.length===0) {
+    if(deal.options[0].redemptionLocations.length===0) {
         this.controller.get("scrollerContainer").innerHTML = "<div class='scrollerItem'>Location Information Unavailable<br/></div>";
-        this.controller.get("scrollerContainer").setStyle({width: scrollerWidth*deal.redemptionLocations.length+"px"});
+        this.controller.get("scrollerContainer").setStyle({width: scrollerWidth*deal.options[0].redemptionLocations.length+"px"});
         this.controller.get("viewMapButton").hide();
     }
     
