@@ -123,7 +123,8 @@ DealsAssistant.prototype.handleCommand = function(event) {
                     this.controller.showAlertDialog({
                         onChoose: function(){},
                         title: 'Favorite Removed',
-                        message: "'" + fav.name + "' removed from favorites.",
+                        message: "<div style='text-align:center'>'" + fav.name + "' removed from favorites.<br/><br/>Tap again to toggle favorite status.</div>",
+                        allowHTMLMessage: true,
                         choices: [
                             {label: "Ok", value:""}
                         ]
@@ -135,7 +136,8 @@ DealsAssistant.prototype.handleCommand = function(event) {
                     this.controller.showAlertDialog({
                         onChoose: function(){},
                         title: 'Favorite Added',
-                        message: "'" + fav.name + "' added to favorites.",
+                        message: "<div style='text-align:center'>'" + fav.name + "' added to favorites.<br/><br/>Tap again to toggle favorite status.</div>",
+                        allowHTMLMessage: true,
                         choices: [
                             {label: "Ok", value:""}
                         ]
