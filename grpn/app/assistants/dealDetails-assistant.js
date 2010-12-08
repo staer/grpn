@@ -220,7 +220,7 @@ DealDetailsAssistant.prototype.viewMap = function(event) {
         parameters: {
             id: "com.palm.app.maps",
             params: {
-                query: addressString
+                query: encodeURI(addressString)
             }
         }
     });
