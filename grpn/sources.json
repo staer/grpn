@@ -19,5 +19,9 @@
     {
         "scenes": "changelog",
         "source": "app/assistants/changelog-assistant.js"
+    },
+    {
+        "scenes": "grouponSays",
+        "source": "app/assistants/grouponSays-assistant.js"
     }
 ]

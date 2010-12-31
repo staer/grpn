@@ -14,6 +14,7 @@ StageAssistant.prototype.setup = function() {
         visible: true,
         items: [
             Mojo.Menu.editItem,
+            {label: 'Groupon Says...', command: 'do-grouponSays'},
             {label: "Release Notes", command: 'do-changelog'},
             {label: "About", command: 'do-aboutGrpn'},
             //Mojo.Menu.prefsItem,
@@ -69,6 +70,9 @@ StageAssistant.prototype.handleCommand = function(event) {
                     break;  
                 case 'do-changelog':
                     this.controller.pushScene('changelog');
+                    break;
+                case 'do-grouponSays':
+                    this.controller.pushScene('grouponSays');
                     break;
                 case Mojo.Menu.helpCmd:
                     this.controller.pushAppSupportInfoScene();
