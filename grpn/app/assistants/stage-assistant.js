@@ -14,6 +14,7 @@ StageAssistant.prototype.setup = function() {
         visible: true,
         items: [
             Mojo.Menu.editItem,
+            {label: "Release Notes", command: 'do-changelog'},
             {label: "About", command: 'do-aboutGrpn'},
             //Mojo.Menu.prefsItem,
             Mojo.Menu.helpItem
@@ -66,6 +67,9 @@ StageAssistant.prototype.handleCommand = function(event) {
                         allowHTMLMessage: true
                     });
                     break;  
+                case 'do-changelog':
+                    this.controller.pushScene('changelog');
+                    break;
                 case Mojo.Menu.helpCmd:
                     this.controller.pushAppSupportInfoScene();
                     break;

@@ -15,5 +15,9 @@
     {
         "scenes": "splash",
         "source": "app/assistants/splash-assistant.js"
+    },
+    {
+        "scenes": "changelog",
+        "source": "app/assistants/changelog-assistant.js"
     }
 ]
