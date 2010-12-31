@@ -6,6 +6,8 @@ function ChangelogAssistant() {
 }
 
 ChangelogAssistant.prototype.setup = function() {
+    // Main menu, attributes and model found in stage-assistant.js
+    this.controller.setupWidget(Mojo.Menu.appMenu, this.controller.stageController.assistant.grpnMenuAttributes, this.controller.stageController.assistant.grpnMenuModel);
 	/* this function is for setup tasks that have to happen when the scene is first created */
 		
 	/* use Mojo.View.render to render view templates and add them to the scene, if needed */
