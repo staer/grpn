@@ -44,6 +44,10 @@ DealDetailsAssistant.prototype.setup = function() {
         ]
     });
     
+    this.controller.setupWidget('discussionButton', {},{
+        label: "Discussion"
+    });
+    
     this.controller.setupWidget("viewMapButton", {
     },{
        label: "View Map",
@@ -80,12 +84,14 @@ DealDetailsAssistant.prototype.setup = function() {
     });
     
     
-    
     // ================================
     // = Bind all the event listeners =
     // ================================
     this.buyButtonHandler = this.buy.bindAsEventListener(this);
     this.controller.listen("buyButton", Mojo.Event.tap, this.buyButtonHandler);
+    
+    this.discussionButtonHandler = this.discussion.bindAsEventListener(this);
+    this.controller.listen("discussionButton", Mojo.Event.tap, this.discussionButtonHandler);
     
     this.viewMapHandler = this.viewMap.bindAsEventListener(this);
     this.controller.listen("viewMapButton", Mojo.Event.tap, this.viewMapHandler);
@@ -100,8 +106,7 @@ DealDetailsAssistant.prototype.setup = function() {
     this.controller.listen("highlightsBar", Mojo.Event.tap, this.highlightsArrowHandler);
     
     this.locationsArrowHandler = this.drawerToggleFactory(this.locationsDrawerModel, "locationsArrow").bindAsEventListener(this);
-    this.controller.listen("locationsBar", Mojo.Event.tap, this.locationsArrowHandler);
-       
+    this.controller.listen("locationsBar", Mojo.Event.tap, this.locationsArrowHandler); 
        
     this.scrim.show();
     this.refreshDeal();
@@ -186,6 +191,13 @@ DealDetailsAssistant.prototype.buy = function(event) {
     });
 };
 
+// ====================================================
+// = Open the discussion display for the current deal =
+// ====================================================
+DealDetailsAssistant.prototype.discussion = function(event) {
+    Mojo.Controller.stageController.pushScene("discussion", this.deal);
+};
+
 // ===================================================================
 // = Launches the map application to view all locations for the deal =
 // ===================================================================
@@ -267,6 +279,7 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     this.controller.get("discountPercent").innerHTML = deal.options[0].discountPercent + "%";
     this.controller.get("valueAmount").innerHTML = deal.options[0].value.formattedAmount;
     this.controller.get("savingsAmount").innerHTML = deal.options[0].discount.formattedAmount;
+    this.controller.get("numBought").innerHTML = deal.soldQuantity;
     
     
     // Calculate the time left to buy the Group

@@ -23,5 +23,9 @@
     {
         "scenes": "grouponSays",
         "source": "app/assistants/grouponSays-assistant.js"
+    },
+    {
+        "scenes": "discussion",
+        "source": "app/assistants/discussion-assistant.js"
     }
 ]
