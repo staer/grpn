@@ -1,6 +1,6 @@
 {
 	"id": "com.staersoft.grpn",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"vendor": "Staersoft",
 	"vendorurl": "http://github.com/staer/",
 	"type": "web",
@@ -8,7 +8,7 @@
 	"title": "grpn",
 	"icon": "icon.png",
 	"smallicon": "icon32.png",
-	"copyright": "Copyright 2010 Dan 'Staer' Harris",
+	"copyright": "Copyright 2011 Dan 'Staer' Harris",
 	"support": {
 		"url": "http://github.com/staer/grpn",
 		"email": {
