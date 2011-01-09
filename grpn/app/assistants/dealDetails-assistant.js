@@ -75,9 +75,9 @@ DealDetailsAssistant.prototype.setup = function() {
        buttonClass: "affirmative"
     });
     
-    this.controller.setupWidget("buyButton", {},{
+    this.controller.setupWidget("buyButton", {}, this.buyButtonModel = {
        label: "Buy!",
-       buttonClass: "affirmative" 
+       buttonClass: "affirmative"
     });
     
     this.controller.setupWidget("descriptionDrawer", {
@@ -317,6 +317,17 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     this.controller.get("valueAmount").innerHTML = deal.options[0].value.formattedAmount;
     this.controller.get("savingsAmount").innerHTML = deal.options[0].discount.formattedAmount;
     this.controller.get("numBought").innerHTML = deal.soldQuantity;
+    
+    if(deal.soldQuantity >= deal.tippingPoint && deal.isSoldOut===false) {
+        this.controller.get("additionalDealText").innerHTML = "the deal is on!";        
+    } else if(deal.soldQuantity < deal.tippingPoint && deal.isSoldOut===false) {
+        this.controller.get("additionalDealText").innerHTML = (deal.tippingPoint - deal.soldQuantity) + " more needed to get the deal.";
+    } else {
+        this.controller.get("additionalDealText").innerHTML = "sold out!";
+    }
+
+    
+    
     
     
     // Calculate the time left to buy the Group
