@@ -1,7 +1,9 @@
+New Release - 1.2.0! Sharing via email and MMS added, other enhancements and bug fixes.
+
 New Release - 1.1.0! Several new features added including "Groupon Says", "Deal Discussion", a number of small enhancements as well as bug fixes!
 
 Groupon™, the oh so popular daily deals service comes to WebOS! Presenting, grpn, a super light weight and fast Groupon™ client which lets you quickly check all the fantastic daily deals in your favorite cities. Powered directly by Groupon's™ data feeds, grpn will help to ensure that a great deal will never pass you by. Check out the details on a deal that interests you and if you want to buy it, simply click the "Buy" button which will jump you over to Groupon's™ website for purchasing.
 
-A note to users: The application is clearly missing some features that are available in the Android and iOS counterparts. The reason for this is that the public interface that Groupon gives developers doesn't quite a few things. For this reason the app cannot show you your purchased Groupons, display the barcodes for your Groupon, or allow you to post discussion items. If the Groupon interface adds support for these features they will be added ASAP.
+A note to users: The application is clearly missing some features that are available in the Android and iOS counterparts. The reason for this is that the public interface Groupon provides developers does not allow quite a few things. For this reason the app cannot show you your purchased Groupons, display the barcodes for your Groupon, or allow you to post discussion items. If the Groupon interface adds support for these features they will be added ASAP.
 
 Questions, comments, feature requests & bug reports are always welcome.
