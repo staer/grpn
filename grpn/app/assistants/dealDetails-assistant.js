@@ -44,9 +44,30 @@ DealDetailsAssistant.prototype.setup = function() {
         ]
     });
     
-    this.controller.setupWidget('discussionButton', {},{
-        label: "Discussion"
+    // Command menu at bottom of screen
+    this.controller.setupWidget(Mojo.Menu.commandMenu, {}, this.cmdMenuModel = {
+        visible: true,
+        items: [
+            {iconPath: 'images/menu-icon-send.png', label: '', submenu: 'share-menu'},
+            {},
+            {iconPath: 'images/menu-icon-comment.png', label: '', command: 'cmd-discussion'}
+        ]
     });
+    
+    this.shareModel = {
+		items: [
+		    {
+    			label: 'Share via email',
+    			command: 'cmd-share-email'
+    		},{
+    			label: 'Share via MMS',
+    			command: 'cmd-share-messaging'
+    		}
+    	]
+	};
+
+	this.controller.setupWidget(
+		'share-menu', null, this.shareModel);
     
     this.controller.setupWidget("viewMapButton", {
     },{
@@ -89,9 +110,6 @@ DealDetailsAssistant.prototype.setup = function() {
     // ================================
     this.buyButtonHandler = this.buy.bindAsEventListener(this);
     this.controller.listen("buyButton", Mojo.Event.tap, this.buyButtonHandler);
-    
-    this.discussionButtonHandler = this.discussion.bindAsEventListener(this);
-    this.controller.listen("discussionButton", Mojo.Event.tap, this.discussionButtonHandler);
     
     this.viewMapHandler = this.viewMap.bindAsEventListener(this);
     this.controller.listen("viewMapButton", Mojo.Event.tap, this.viewMapHandler);
@@ -150,6 +168,32 @@ DealDetailsAssistant.prototype.handleCommand = function(event) {
             case 'cmd-favorites':
                 this.controller.stageController.assistant.showFavoritesList();
                 break;
+            case 'cmd-discussion':
+                Mojo.Controller.stageController.pushScene("discussion", this.deal);
+                break;
+            case 'cmd-share-email':
+                this.controller.serviceRequest('palm://com.palm.applicationManager', {
+                    method: 'launch',
+                    parameters: {
+                        id: 'com.palm.app.email',
+                        params: {
+                            summary: "Check out this Groupon",
+                            text: "Check out this Groupon: " + this.deal.dealUrl
+                        }
+                    }
+                });
+                break;
+            case 'cmd-share-messaging':
+                this.controller.serviceRequest('palm://com.palm.applicationManager', {
+                    method: 'launch',
+                    parameters: {
+                        id: 'com.palm.app.messaging',
+                        params: {
+                            messageText: "Check out this Groupon: " + this.deal.dealUrl
+                        }
+                    }
+                });
+                break;
             default:
                 break;
         }
@@ -189,13 +233,6 @@ DealDetailsAssistant.prototype.buy = function(event) {
             }
         }
     });
-};
-
-// ====================================================
-// = Open the discussion display for the current deal =
-// ====================================================
-DealDetailsAssistant.prototype.discussion = function(event) {
-    Mojo.Controller.stageController.pushScene("discussion", this.deal);
 };
 
 // ===================================================================
