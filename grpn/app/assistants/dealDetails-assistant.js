@@ -283,12 +283,10 @@ DealDetailsAssistant.prototype.populatePage = function(deal) {
     
     
     // Calculate the time left to buy the Group
-    // We have to manually parse the UTC date string provided by the Groupon
-    // API
+    // Use my own extDate.js module to read in the end date from Groupon
+    // https://github.com/staer/extDate
     var today = new Date();
-    var endDate = new Date(Date.parse(deal.endAt.substring(0,10)));
-    endDate.setUTCHours(parseInt(deal.endAt.substring(11,13), 10));
-    endDate.setUTCMinutes(parseInt(deal.endAt.substring(14,16), 10));
+    var endDate = Date.strptime(deal.endAt, "%Y-%m-%dT%H:%M:%SZ", true);
     
     var diff = endDate - today;
     var MINUTE = 1000*60;

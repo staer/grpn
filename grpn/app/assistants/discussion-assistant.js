@@ -60,9 +60,7 @@ DiscussionAssistant.prototype.populateDiscussion = function(posts) {
     var DAY = 24 * HOUR;
     var today = new Date();
     for(var i=0; i < posts.length; i++) {
-        var commentDate = new Date(Date.parse(posts[i].createdAt.substring(0,10)));
-        commentDate.setUTCHours(parseInt(posts[i].createdAt.substring(11,13), 10));
-        commentDate.setUTCMinutes(parseInt(posts[i].createdAt.substring(14,16), 10));
+        var commentDate = Date.strptime(posts[i].createdAt, "%Y-%m-%dT%H:%M:%SZ", true);
 
         var diff = today-commentDate;
 
@@ -70,7 +68,7 @@ DiscussionAssistant.prototype.populateDiscussion = function(posts) {
         var hours = Math.floor((diff - (days * DAY)) / HOUR);
         var minutes = Math.floor((diff - (days * DAY) - (hours * HOUR)) / MINUTE);
         var txt = "";
-        //Mojo.Log.info("Days: " + days);
+
         if(days > 0) {
             txt = "<br/>" + days + " days, ";
         }

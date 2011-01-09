@@ -27,5 +27,8 @@
     {
         "scenes": "discussion",
         "source": "app/assistants/discussion-assistant.js"
-    }
+    },
+	{
+		"source": "javascript/extDate.js"
+	}
 ]
