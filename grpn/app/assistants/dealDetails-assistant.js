@@ -59,9 +59,14 @@ DealDetailsAssistant.prototype.setup = function() {
 		    {
     			label: 'Share via email',
     			command: 'cmd-share-email'
-    		},{
+    		},
+    		{
     			label: 'Share via MMS',
     			command: 'cmd-share-messaging'
+    		},
+    		{
+    		    label: 'Copy link to clipboard',
+    		    command: 'cmd-copy'
     		}
     	]
 	};
@@ -193,6 +198,9 @@ DealDetailsAssistant.prototype.handleCommand = function(event) {
                         }
                     }
                 });
+                break;
+            case 'cmd-copy':
+                this.controller.stageController.setClipboard(this.deal.dealUrl);
                 break;
             default:
                 break;
